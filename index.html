@@ -64,6 +64,8 @@
             justify-content: space-between;
             align-items: center;
             animation: fadeInDown 0.6s ease forwards;
+            position: relative;
+            z-index: 100;
         }
 
         .logo {
@@ -82,37 +84,102 @@
             color: var(--brand-blue);
         }
 
-        .lang-select-wrapper {
+        /* КРАСИВЫЙ КАСТОМНЫЙ ДРОПДАУН ЯЗЫКОВ */
+        .custom-dropdown {
+            position: relative;
+            user-select: none;
+        }
+
+        .dropdown-btn {
             display: flex;
             align-items: center;
             gap: 8px;
             background-color: #ffffff;
             border: 1px solid var(--card-border);
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+            font-family: 'Google Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
 
-        .lang-select-wrapper:hover {
+        .dropdown-btn:hover {
             border-color: #b0b5ba;
-            box-shadow: 0 1px 3px rgba(60,64,67,0.12);
+            box-shadow: 0 2px 6px rgba(60, 64, 67, 0.12);
+            background-color: #fdfdfd;
         }
 
-        .lang-select-wrapper svg {
+        .dropdown-btn svg.globe-icon {
             width: 18px;
             height: 18px;
             fill: var(--text-sub);
         }
 
-        .lang-select {
-            border: none;
-            background: transparent;
-            font-family: 'Google Sans', sans-serif;
+        .dropdown-btn svg.arrow-icon {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-sub);
+            transition: transform 0.25s ease;
+        }
+
+        .custom-dropdown.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(0.96);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-dropdown.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
             color: var(--text-main);
-            outline: none;
             cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f1f3f4;
+        }
+
+        .dropdown-item.active {
+            background-color: #e8f0fe;
+            color: var(--brand-blue);
+        }
+
+        .dropdown-item .flag {
+            font-size: 16px;
+            line-height: 1;
         }
 
         main {
@@ -200,7 +267,6 @@
             animation: fadeInUp 0.6s ease 0.4s both;
         }
 
-        /* Стили для видео-шоукейса */
         .showcase-container {
             width: 100%;
             max-width: 800px;
@@ -319,14 +385,26 @@
         <div class="logo">
             <span>N</span>Launcher
         </div>
-        <div class="lang-select-wrapper">
-            <svg viewBox="0 0 24 24">
-                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.91-4.33-3.56zm2.95-8H5.08c.96-1.65 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
-            </svg>
-            <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
-                <option value="en" selected>English (US)</option>
-                <option value="ru">Русский (ru)</option>
-            </select>
+
+        <!-- Новый кастомный селектор языков -->
+        <div class="custom-dropdown" id="langDropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown()">
+                <svg class="globe-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.91-4.33-3.56zm2.95-8H5.08c.96-1.65 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+                </svg>
+                <span id="currentLangLabel">English (US)</span>
+                <svg class="arrow-icon" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/>
+                </svg>
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item active" onclick="selectLanguage('en', 'English (US)')">
+                    <span class="flag">🇺🇸</span> English (US)
+                </div>
+                <div class="dropdown-item" onclick="selectLanguage('ru', 'Русский (ru)')">
+                    <span class="flag">🇷🇺</span> Русский (ru)
+                </div>
+            </div>
         </div>
     </header>
 
@@ -344,7 +422,6 @@
             <span class="system-req" id="systemReq">Windows 10 / 11 (64-bit) • Fast Installation</span>
         </div>
 
-        <!-- Видео-презентация (Showcase) -->
         <div class="showcase-container">
             <video controls autoplay muted loop>
                 <source src="https://github.com/Maksim1234-tech/NLauncher---Minecraft-launcher/releases/download/NLauncherMinecraftLauncher/Showcase.mp4" type="video/mp4">
@@ -424,6 +501,30 @@
             }
         };
 
+        function toggleDropdown() {
+            document.getElementById('langDropdown').classList.toggle('open');
+        }
+
+        function selectLanguage(lang, label) {
+            document.getElementById('currentLangLabel').innerText = label;
+            
+            // Подсветка активного элемента
+            const items = document.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                if (item.innerText.includes(label)) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Перевод текста
+            changeLanguage(lang);
+
+            // Закрыть меню
+            document.getElementById('langDropdown').classList.remove('open');
+        }
+
         function changeLanguage(lang) {
             const data = translations[lang];
             if (!data) return;
@@ -448,6 +549,14 @@
 
             document.documentElement.lang = lang;
         }
+
+        // Закрывать дропдаун при клике вне его
+        window.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('langDropdown');
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
     </script>
 
 </body>
