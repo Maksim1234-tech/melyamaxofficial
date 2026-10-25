@@ -77,14 +77,13 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            transition: color 0.25s ease;
         }
 
         .logo span {
             color: var(--brand-blue);
         }
 
-        /* КРАСИВЫЙ КАСТОМНЫЙ ДРОПДАУН ЯЗЫКОВ */
+        /* Стильный кастомный селектор в стиле Google */
         .custom-dropdown {
             position: relative;
             user-select: none;
@@ -177,11 +176,6 @@
             color: var(--brand-blue);
         }
 
-        .dropdown-item .flag {
-            font-size: 16px;
-            line-height: 1;
-        }
-
         main {
             width: 100%;
             max-width: 900px;
@@ -235,7 +229,6 @@
             text-decoration: none;
             box-shadow: 0 1px 3px rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
             transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), background-color 0.25s ease, box-shadow 0.25s ease;
-            will-change: transform, box-shadow;
         }
 
         .btn-download:hover {
@@ -244,21 +237,10 @@
             transform: translateY(-2px);
         }
 
-        .btn-download:active {
-            transform: translateY(0);
-            box-shadow: 0 1px 3px rgba(60,64,67,0.3);
-        }
-
         .btn-download svg {
             width: 20px;
             height: 20px;
             fill: currentColor;
-            transition: transform 0.25s ease;
-            will-change: transform;
-        }
-
-        .btn-download:hover svg {
-            transform: translateY(2px);
         }
 
         .system-req {
@@ -301,7 +283,6 @@
             padding: 28px;
             text-align: left;
             transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.25s ease, box-shadow 0.25s ease;
-            will-change: transform, box-shadow;
         }
 
         .feature-card:hover {
@@ -319,11 +300,6 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-            transition: background-color 0.25s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            background-color: #d2e3fc;
         }
 
         .feature-icon svg {
@@ -355,27 +331,13 @@
             font-size: 13px;
             color: var(--text-sub);
             background: #ffffff;
-            animation: fadeInDown 0.6s ease 0.3s both;
         }
 
         @media (max-width: 600px) {
-            header {
-                padding: 16px 20px;
-            }
-
-            .hero-title {
-                font-size: 32px;
-            }
-
-            .hero-subtitle {
-                font-size: 16px;
-            }
-
-            footer {
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
-            }
+            header { padding: 16px 20px; }
+            .hero-title { font-size: 32px; }
+            .hero-subtitle { font-size: 16px; }
+            footer { flex-direction: column; gap: 12px; text-align: center; }
         }
     </style>
 </head>
@@ -386,7 +348,6 @@
             <span>N</span>Launcher
         </div>
 
-        <!-- Новый кастомный селектор языков -->
         <div class="custom-dropdown" id="langDropdown">
             <button class="dropdown-btn" onclick="toggleDropdown()">
                 <svg class="globe-icon" viewBox="0 0 24 24">
@@ -508,7 +469,6 @@
         function selectLanguage(lang, label) {
             document.getElementById('currentLangLabel').innerText = label;
             
-            // Подсветка активного элемента
             const items = document.querySelectorAll('.dropdown-item');
             items.forEach(item => {
                 if (item.innerText.includes(label)) {
@@ -518,10 +478,7 @@
                 }
             });
 
-            // Перевод текста
             changeLanguage(lang);
-
-            // Закрыть меню
             document.getElementById('langDropdown').classList.remove('open');
         }
 
@@ -550,7 +507,6 @@
             document.documentElement.lang = lang;
         }
 
-        // Закрывать дропдаун при клике вне его
         window.addEventListener('click', function(e) {
             const dropdown = document.getElementById('langDropdown');
             if (!dropdown.contains(e.target)) {
@@ -558,6 +514,5 @@
             }
         });
     </script>
-
 </body>
 </html>
